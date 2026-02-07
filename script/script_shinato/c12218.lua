@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	Card.IsCanBeRitualMaterial=(function()
 		local oldfunc=Card.IsCanBeRitualMaterial
 		return function(c,sc,player)
-			if c:IsLocation(LOCATION_SZONE) and c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL) then
+			if c:IsLocation(LOCATION_SZONE) and c:IsLevelAbove(1) and c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL) then
 				return true
 			else
 				return oldfunc(c,sc,player)
