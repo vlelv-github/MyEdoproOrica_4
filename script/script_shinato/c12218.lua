@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SEND_REPLACE)
 	e1:SetTarget(s.reptg)
 	e1:SetValue(s.repval)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1) 
 	-- 2번 효과 적용을 위한 오버라이드
 	Duel.GetRitualMaterial=(function()
 		local oldfunc=Duel.GetRitualMaterial
