@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(function(e,c) return Duel.GetOverlayCount(0,1,1)*100 end)
+	e1:SetValue(function(e,c) return Duel.GetOverlayCount(0,1,1)*300 end)
 	c:RegisterEffect(e1)
     -- 2번 효과
     local e2=Effect.CreateEffect(c)
