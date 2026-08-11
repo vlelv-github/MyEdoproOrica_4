@@ -70,10 +70,11 @@ function s.initial_effect(c)
 	e7:SetOperation(s.retop)
 	c:RegisterEffect(e7)
 	aux.GlobalCheck(s,function()
-
 		s[0]=0
+		s[1]=0
 		aux.AddValuesReset(function()
 			s[0]=0
+			s[1]=0
 		end)
 		-- 자신이 특수 소환되었는지 체크
 		local ge1=Effect.CreateEffect(c)
@@ -148,7 +149,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	
 	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 then
-		local count=s[0]
+		local count=s[tp]
 		if count>0 and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
@@ -163,12 +164,15 @@ end
 
 
 function s.returnfilter(c,tp)
-	return c:IsMonsterCard() and c:IsSetCard(0xb3) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and not c:IsLocation(LOCATION_EXTRA)
+	return c:IsMonsterCard() and c:IsSetCard(SET_YOSENJU) and c:IsPreviousPosition(POS_FACEUP)
+	 and c:IsPreviousLocation(LOCATION_ONFIELD) and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.register_return(e,tp,eg,ep,ev,re,r,rp)
-    local g=eg:Filter(s.returnfilter,nil,tp)
-    if #g>0 then
-		s[0]=s[0]+#g
-    end
+    local tc=eg:GetFirst()
+	for tc in aux.Next(eg) do
+		local p=tc:GetControler()
+		if s.returnfilter(tc,tp) then 
+			s[p] = s[p]+1
+		end
+	end
 end
